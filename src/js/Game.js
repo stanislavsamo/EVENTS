@@ -9,14 +9,12 @@ export default class Game {
     this.interval = null;
     this.scoreHitsEl = document.querySelector(".hits");
     this.scoreFalsesEl = document.querySelector(".falses");
-
     this.startGame();
   }
 
   startGame() {
     this.cells.forEach((cell) => {
       cell.addEventListener("click", () => {
-        //cell.style.cursor = "url(../img/SovietCursor.cur), auto";
         if (cell.contains(this.enemy.element)) {
           this.hits += 1;
           this.scoreHitsEl.textContent = this.hits;
