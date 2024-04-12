@@ -7,9 +7,10 @@ export default class Game {
     this.falses = 0;
     this.hits = 0;
     this.interval = null;
+    this.appearances = 0;
     this.scoreHitsEl = document.querySelector(".hits");
     this.scoreFalsesEl = document.querySelector(".falses");
-    this.startGame();
+    this.startGame(); 
   }
 
   startGame() {
@@ -33,6 +34,7 @@ export default class Game {
   checkMaxScore() {
     clearInterval(this.interval);
     const moveGoblinMethod = this.enemy.moveGoblin.bind(this.enemy, this.cells);
+    
 
     if (this.falses >= 5) {
       alert("Вы проиграли!");
@@ -41,7 +43,14 @@ export default class Game {
       alert("Победа!");
       this.cleanScore();
     }
-    this.interval = setInterval(moveGoblinMethod, 1000);
+    this.interval = setInterval(()=>{
+      moveGoblinMethod();
+      if(!this.click && this.enemy.stepNum !==1) {
+        this.falses += 1;
+        this.scoreFalsesEl.textContent = "-" + this.falses;
+        this.checkMaxScore();
+      }
+    }, 1000);
   }
 
   cleanScore() {
